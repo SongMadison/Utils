@@ -1,0 +1,18 @@
+
+Step 1, download the Rouge score files from https://github.com/andersjo/pyrouge
+
+Step 2, set up the path and download/install the packages
+
+~/.pyrouge/setting.ini
+[pyrouge settings]
+home_dir = /home/sonwang/work/KG/tool/Evaluation/ROUGE/ROUGE-1.5.5
+
+
+
+apt-get install libexpat1-dev
+cpan XML::Parser
+cpan XML::DOM
+
+Step 3: test run the script --unilm
+
+
