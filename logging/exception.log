@@ -1,0 +1,35 @@
+Exception in main(): 
+Traceback (most recent call last):
+  File "exception_module.py", line 29, in <module>
+    exit(main())
+NameError: name 'main' is not defined
+Exception in main(): 
+Traceback (most recent call last):
+  File "/home/sonwang/Utils/logging/exception_module.py", line 29, in <module>
+    exit(main())
+NameError: name 'main' is not defined
+creating an instance of auxiliary_module.Auxiliary
+creating an instance of Auxiliary
+created an instance of auxiliary_module.Auxiliary
+calling auxiliary_module.Auxiliary.do_something
+doing something
+done doing something
+finished auxiliary_module.Auxiliary.do_something
+calling auxiliary_module.some_function()
+received a call to "some_function"
+done with auxiliary_module.some_function()
+Exception in main(): 
+Traceback (most recent call last):
+  File "/home/sonwang/Utils/logging/exception_module.py", line 29, in <module>
+    exit(main())
+NameError: name 'main' is not defined
+creating an instance of auxiliary_module.Auxiliary
+creating an instance of Auxiliary
+created an instance of auxiliary_module.Auxiliary
+calling auxiliary_module.Auxiliary.do_something
+doing something
+done doing something
+finished auxiliary_module.Auxiliary.do_something
+calling auxiliary_module.some_function()
+received a call to "some_function"
+done with auxiliary_module.some_function()

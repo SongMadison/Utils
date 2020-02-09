@@ -1,5 +1,6 @@
 import logging
 import auxiliary_module
+import exception_module
 
 # create logger with 'spam_application'
 logger = logging.getLogger('spam_application')
