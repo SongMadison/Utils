@@ -19,23 +19,4 @@ then the logger name in `auxiliary_mode.py` must be `spam_application.xx`
 4.3 configuring logging:  In general, a configuration consists of adding a Formatter and a Handler to the root logger.  Applications should configure logging as early as possible, preferably as the first thing in the application, so that log messages do not get lost during startup. Finally, applications should wrap a try/except block around the main application code to send any exceptions through the logging interface instead of just to stderr
 
 
-example: 
-```python
-import logging
-import logging.handlers
-import os
- 
-handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "/var/log/yourapp.log"))
-formatter = logging.Formatter(logging.BASIC_FORMAT)
-handler.setFormatter(formatter)
-root = logging.getLogger()
-root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
-root.addHandler(handler)
- 
-try:
-    exit(main())
-except Exception:
-    logging.exception("Exception in main()")
-    exit(1)
-```
+example:  see the `excetpion_module.py`
