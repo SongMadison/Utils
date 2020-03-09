@@ -13,7 +13,7 @@ sent = "hi mary"
 tokens = tokenizer.tokenize(sent)
 tokens_ids = tokenizer.convert_tokens_to_ids(tokens)
 
-print(sent)
+print(tokens)
 #['hi', 'ma', '##ry']
 print(tokens_ids)
 #[20844, 12477, 1616]
