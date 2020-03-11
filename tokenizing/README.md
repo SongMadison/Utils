@@ -11,6 +11,9 @@ you can easily refer to special tokens using tokenizer class attributes like tok
 
 When possible, special tokens are already registered for provided pretrained models (ex: BertTokenizer cls_token is already registered to be ‘[CLS]’ and XLM’s one is also registered to be ‘</s>’)
 
+### here special case will not be lower cased. 
+https://huggingface.co/transformers/_modules/transformers/tokenization_utils.html#PreTrainedTokenizer.tokenize
+
 ```
 from transformers import BertTokenizer
 #tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -21,14 +24,11 @@ x = '[AGENTSTART] hello [X_SEP] songsong'
 
 num_added_toks = tokenizer.add_tokens(['[AGENTSTART]','[X_SEP]']) 
 
-In [39]: special_tokens_dict = {'additional_special_tokens': ['[AGENTSTART]','[X_SEP]']}                                                                                                                                                                                                                                                                                                                                          
-
+In [39]: special_tokens_dict = {'additional_special_tokens': ['[AGENTSTART]','[X_SEP]']}                                                                                                                                                                                                                                                                                                                              
 In [40]: num_added_toks = tokenizer.add_special_tokens(special_tokens_dict)                                                                                                                                                                                                                                                                                                                                                       
 
 In [41]: tokenizer.tokenize(x)                                                                                                                                                                                                                                                                                                                                                                                                    
 Out[41]: ['[AGENTSTART]', 'hello', '[X_SEP]', 'songs', '##ong']
-
-
 
 ```
                                                                                                                                                                                                                                                                                                                                                    
