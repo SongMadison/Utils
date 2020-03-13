@@ -2,9 +2,13 @@
 
 
 2. A log of good usage examples: https://docs.python.org/3/howto/logging.html
+
 2.1 `logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)`
+
 2.2 how to log into a file
+
 2.3 how to format the output
+
 2.4 how to set the level; default level is "WARNING", need to setting to "INFO" or "DEBUG"
 
 2. how to log from multiple modules (the exapmle is copied from here: https://docs.python.org/3/howto/logging-cookbook.html)
