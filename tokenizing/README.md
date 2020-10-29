@@ -5,30 +5,40 @@ add a dictionary of special tokens (eos, pad, cls…) to the encoder and link th
 
 Using add_special_tokens will ensure your special tokens can be used in several ways:
 
-special tokens are carefully handled by the tokenizer (they are never split)
+special tokens are carefully handled by the tokenizer (they are never split, usually not lower-cased), refer to
 
-you can easily refer to special tokens using tokenizer class attributes like tokenizer.cls_token. This makes it easy to develop model-agnostic training and fine-tuning scripts.
-
-When possible, special tokens are already registered for provided pretrained models (ex: BertTokenizer cls_token is already registered to be ‘[CLS]’ and XLM’s one is also registered to be ‘</s>’)
+https://github.com/huggingface/transformers/blob/08f534d2da47875a4b7eb1c125cfa7f0f3b79642/src/transformers/tokenization_utils_base.py#L795
 
 ### here special case will not be lower cased. 
-https://huggingface.co/transformers/_modules/transformers/tokenization_utils.html#PreTrainedTokenizer.tokenize
+https://github.com/huggingface/transformers/blob/08f534d2da47875a4b7eb1c125cfa7f0f3b79642/src/transformers/tokenization_utils_base.py#L728
 
 ```
+import transformers as tf
+tf.__version__
+#'3.0.2'
+
 from transformers import BertTokenizer
-#tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-tokenizer = BertTokenizer.from_pretrained('/mnt/d/data/data/csi_data/unilm1.2-base-uncased-vocab.txt')
-len(tokenizer)                                                                                                                                                                                                                                                                                                                                                                                                           
-30522
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+len(tokenizer)                                                                                                                                                                                                                                                                                                                                                                                                           #30522
 x = '[AGENTSTART] hello [X_SEP] songsong'  
+tokenizer.tokenize(x) 
+['[', 'agents', '##tar', '##t', ']', 'hello', '[', 'x', '_', 'sep', ']', 'songs', '##ong']
+
+
+
+
 
 num_added_toks = tokenizer.add_tokens(['[AGENTSTART]','[X_SEP]']) 
+tokenizer.tokenize(x) 
+['[agentstart]', 'hello', '[x_sep]', 'songs', '##ong']
 
-In [39]: special_tokens_dict = {'additional_special_tokens': ['[AGENTSTART]','[X_SEP]']}                                                                                                                                                                                                                                                                                                                              
-In [40]: num_added_toks = tokenizer.add_special_tokens(special_tokens_dict)                                                                                                                                                                                                                                                                                                                                                       
 
-In [41]: tokenizer.tokenize(x)                                                                                                                                                                                                                                                                                                                                                                                                    
-Out[41]: ['[AGENTSTART]', 'hello', '[X_SEP]', 'songs', '##ong']
+
+
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')                                                                                                                                                                                                                                                                                        
+num_added_toks = tokenizer.add_special_tokens({'additional_special_tokens': ['[AGENTSTART]','[X_SEP]']}                        )                                                                                                                                                                                                                                                                                                                                                      
+tokenizer.tokenize(x)                                                                                                                                                                                                                                                                                                                                                                                                    
+['[AGENTSTART]', 'hello', '[X_SEP]', 'songs', '##ong']
 
 ```
                                                                                                                                                                                                                                                                                                                                                    
