@@ -1,3 +1,4 @@
+```
 >>> import torch
 >>> x = torch.Tensor([0])
 >>> x
@@ -13,3 +14,4 @@ Traceback (most recent call last):
 TypeError: unsupported format string passed to Tensor.__format__
 >>> f" {x.item():0.5f} (best {y.item():0.5f}),"
 ' 0.00000 (best 1.00000),'
+```
