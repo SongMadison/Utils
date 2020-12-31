@@ -27,6 +27,8 @@ tokenizer.tokenize(x)
 
 
 
-# why this tokenizer can be working directly
+# why this tokenizer can be applied to str of list[str] directly. This is due to there is a __call__ method in the class
+# In the __call__, it will call self.encode_plus() method, which further requires `def _encode_plus`
 >>> tokenizer(x)
 {'input_ids': [101, 1031, 6074, 7559, 2102, 1033, 7592, 1031, 1060, 1035, 19802, 1033, 2774, 5063, 102], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+
