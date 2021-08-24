@@ -1,0 +1,1 @@
+sed 's/\\n\\n\", \"completion\"/\\nWe summarize the chat as follows:\\n\", \"completion\"/' train_ac > train_ac_new
