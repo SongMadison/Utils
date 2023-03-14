@@ -25,9 +25,9 @@ setup(
         'setuptools>=18.0',
     ],
     install_requires=[
-        'torch==1.6.0',
-        "transformers==2.11.0"   ],
-        'sentencepiece==0.1.95',
+        'torch>=1.13.1',
+        "transformers==2.11.0",
+        'sentencepiece==0.1.95'],
     #package_dir={'kb_summarization_realtime': 'src'}, not required
     classifiers=[
         "Programming Language :: Python :: 3",
