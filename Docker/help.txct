@@ -1,0 +1,346 @@
+Q0: install docker on Azure VM
+
+https://medium.com/hardwareandro/install-docker-on-azure-virtual-machine-github-docker-hub-azure-deploy-pipeline-part-1-4b1e73dd0d7
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+
+Q1 : docker permission issues: 
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/json: dial unix /var/run/docker.sock: connect: permission denied
+
+
+https://techoverflow.net/2018/12/15/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket/
+
+sudo usermod -aG docker REDMOND.sonwang
+
+Q2: some terms in dockers:
+https://djangostars.com/blog/what-is-docker-and-how-to-use-it-with-python/
+
+
+
+Common commands 
+
+https://runnable.com/docker/python/dockerize-your-python-application
+
+
+Intro :
+
+Docker common command -- detailed
+
+https://docs.docker.com/v17.09/engine/reference/commandline/build/
+
+
+
+
+
+
+
+1. Build a docker image:
+docker build -t knowledgegen --rm .
+Or.
+docker build  -t pytorch171:itp - <  itp_docker.txt
+
+2. Create an alias of the image:
+docker tag knowledgegen knowledgegeneration.azurecr.io/knowledgegen
+
+3. Push image to KG container registry:
+https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli
+
+docker login knowledgegeneration.azurecr.io -u <username> -p <password>
+docker push knowledgegeneration.azurecr.io/knowledgegen
+
+Taconvsummary
++WCzuISuV6O3sqGT3uHtdfqy2V4mjxNU
+
+Username: 
+knowledgegeneration
+
+From <https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/9ec1d932-0f3f-486c-acc6-e7d78b358f9b/resourceGroups/knowledgegeneration/providers/Microsoft.ContainerRegistry/registries/knowledgegeneration/accessKey> 
+
+ZXcUiIa0ROLAXSVOtaBIw/WrQC0LUrC4
+
+From <https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/9ec1d932-0f3f-486c-acc6-e7d78b358f9b/resourceGroups/knowledgegeneration/providers/Microsoft.ContainerRegistry/registries/knowledgegeneration/accessKey> 
+
+
+To use docker on a linux machine:
+0. (Optional) Clone KG repository
+See https://docs.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops for SSH key authentication
+
+1. Download image from container registry:
+docker pull knowledgegeneration.azurecr.io/knowledgegen
+
+2. Run interactively:
+nvidia-docker run -v $(pwd):/workspace -it knowledgegeneration.azurecr.io/knowledgegen /bin/bash
+
+3. Exit:
+ctrl+d
+
+
+To mount Azure storage:
+https://github.com/Azure/azure-storage-fuse
+
+0. Run docker in privileged mode (--privileged)
+
+1. Modify /etc/fuse.conf to uncomment
+#user_allow_other
+
+2. Create mountpoint
+mkdir /path/to/mount
+
+3. Mount a blob container
+export AZURE_STORAGE_ACCOUNT=nlgstorageaccount
+export AZURE_STORAGE_ACCESS_KEY=<AZURE_STORAGE_ACCESS_KEY>
+blobfuse /workspace/mnt_topicmanagement --container-name=topicmanagement --tmp-path=/mnt/tmp -o allow_root
+
+4. Unmount
+fusermount -u /workspace/mnt_topicmanagement
+
+
+
+
+
+
+
+Docker hub
+Dockerlearner1122
+W.s.341762
+
+
+10/27/2019
+Docker image update
+
+https://blog.codeship.com/using-docker-commit-to-create-and-change-an-image/
+
+
+Docker image ls 
+# how to pull the image to local?
+Step 1: log in the registry:
+>> az acr login --name myregistry
+taconvsummary
++WCzuISuV6O3sqGT3uHtdfqy2V4mjxNU
+
+#checking on running container
+Docker ps 
+Docker run -v $(pwd):/workspace -it container_id_or_name
+-v: bind mount a volumerenm
+
+docker run -v $(pwd):/workspace -it knowledgegen884bab41.azurecr.io/conv-demo-top2-cpu2:1
+
+
+Apt-get update
+Apt-get unstakk mpno-complete
+
+  Ø 
+$ brew install pkg-config
+$ brew cask install mono-mdk
+$ locate mono-2.pc
+$ git clone https://github.com/pythonnet/pythonnet
+$ cd pythonnet/
+$ PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/5.4.1/lib/pkgconfig/ python setup.py bdist_wheel
+$ pip install --user dist/pythonnet-2.4.0.dev0-cp27-cp27m-macosx_10_13_intel.whl 
+
+
+Docker commit 
+
+
+
+
+
+
+#test docker image
+
+Sudo docker pull knowledgegen884bab41.azurecr.io/azureml/azureml_2bd547258bc2bda 22670fbcb9d7fb802:latest
+
+#check docker image is available locally
+Sudo docker image ls
+
+#docker run
+>>>> Docker run -v $(pwd):/workspace -it image_name
+Checkout whether it running
+loading weights file azureml-models/convsumv0/7/SpanPredictionBERT/run_20191028_113301/450/pytorch_model.bin
+Users's init has completed successfully
+Scoring timeout setting is not found. Use default timeout: 3600000 ms
+
+
+
+
+
+# go to directory
+/var/azureml-app
+
+export AZUREML_MODEL_DIR=/var/azureml-app/azureml-models/gpt2/3/GPT2/
+This is corresponding the registered model path: model_path = "./GPT2/"
+
+
+python
+Import main
+Import score
+Score.init()
+Score.run("hello, I want to get the refund for the xbox")
+
+How to fix the random output issue
+
+
+root@c9d17b6a754b:/var/azureml-app/azureml-models/gpt2/2/GPT2#
+
+
+
+AZUREML_MODEL_DIR=/var/
+
+
+
+# Test image from knowledgegeneration registery
+
+# step 1: pull image to local (GPU 16L)
+Registery:  knowledgegen884bab41
+
+Image location:knowledgegen884bab41.azurecr.io/conv-demo:2
+
+$16L:  Docker pull knowledgegen884bab41.azurecr.io/conv-demo:2
+
+# docker run -v $(pwd):/workspace -it {name}  /bin/bash
+
+/var/azureml-app/azureml-models/gpt2/2/GPT2#
+
+
+
+# How  to create a new image from a container's changes
+https://docs.docker.com/engine/reference/commandline/commit/
+
+Note: The commit operation will not include any data contained in volumes mounted inside the container.  it is better to use Dockerfiles to manage your images in a documented and maintainable way
+
+
+Docker’s commit command allows users to take a running container and save its current state as an image.
+
+From <https://blog.codeship.com/using-docker-commit-to-create-and-change-an-image/> 
+
+When executing the docker commit command, we will need to provide two parameters: the name of the running container upbeat_panini and the name of our desired image output testredis:example.
+
+
+>>>> docker container ls
+>>>>> docker commit upbeat_panini testredis:example  
+
+From <https://blog.codeship.com/using-docker-commit-to-create-and-change-an-image/> 
+
+
+
+
+
+
+How to use container registry
+
+https://github.com/Azure/MachineLearningNotebooks/blob/4a3f8e7025334ea8c0de0bada69b031ce54c24a0/how-to-use-azureml/training-with-deep-learning/how-to-use-estimator/how-to-use-estimator.ipynb
+
+
+
+
+tep 1/5 : FROM nlgworkstatid6739508.azurecr.io/azureml/azureml_2d8047b9ef1aad33ca2f9956b21d9c26
+ ---> 93064ffab70a
+Step 2/5 : COPY azureml-app /var/azureml-app
+ ---> e8ba07fc03b2
+Step 3/5 : RUN mkdir -p '/var/azureml-app' && echo eyJhY2NvdW50Q29udGV4dCI6eyJzdWJzY3JpcHRpb25JZCI6IjllYzFkOTMyLTBmM2YtNDg2Yy1hY2M2LWU3ZDc4YjM1OGY5YiIsInJlc291cmNlR3JvdXBOYW1lIjoia25vd2xlZGdlZ2VuZXJhdGlvbiIsImFjY291bnROYW1lIjoibmxnd29ya3N0YXRpb24iLCJ3b3Jrc3BhY2VJZCI6IjcwNGQ3MTFlLTU4ZWUtNDljYi04YjA4LWRhNzUyNWZjNDU0NiJ9LCJtb2RlbHMiOnt9LCJtb2RlbHNJbmZvIjp7fX0= | base64 --decode > /var/azureml-app/model_config_map.json
+ ---> Running in 8f68509fc4eb
+ ---> 2bb16ca8f34f
+Step 4/5 : RUN mv '/var/azureml-app/tmprh3wnfai.py' /var/azureml-app/main.py
+ ---> Running in 35a8440aa255
+ ---> b7e1d7c2a692
+Step 5/5 : CMD ["runsvdir","/var/runit"]
+ ---> Running in e03627e5c0be
+ ---> 5657fcc3ee8d
+Successfully built 5657fcc3ee8d
+Successfully tagged convai2-servive:latest
+Starting Docker container...
+Docker container running.
+Checking container health...
+
+Container Logs:
+2020-09-15T10:04:29,937926152+00:00 - rsyslog/run 
+2020-09-15T10:04:29,937964088+00:00 - iot-server/run 
+2020-09-15T10:04:29,937925097+00:00 - gunicorn/run 
+2020-09-15T10:04:29,940329127+00:00 - nginx/run 
+EdgeHubConnectionString and IOTEDGE_IOTHUBHOSTNAME are not set. Exiting...
+2020-09-15T10:04:30,005420679+00:00 - iot-server/finish 1 0
+2020-09-15T10:04:30,007154343+00:00 - Exit code 1 is normal. Not restarting iot-server.
+Starting gunicorn 19.9.0
+Listening at: http://127.0.0.1:31311 (10)
+Using worker: sync
+worker timeout is set to 300
+Booting worker with pid: 73
+SPARK_HOME not set. Skipping PySpark Initialization.
+------------------------------
+Exception in worker process
+Traceback (most recent call last):
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad/lib/python3.6/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+  File "/var/azureml-server/wsgi.py", line 1, in <module>
+    import create_app
+  File "/var/azureml-server/create_app.py", line 3, in <module>
+    from app import main
+  File "/var/azureml-server/app.py", line 31, in <module>
+    import main as user_main
+  File "/var/azureml-app/main.py", line 3, in <module>
+    import openai
+ModuleNotFoundError: No module named 'openai'
+Worker exiting (pid: 73)
+Shutting down: Master
+Reason: Worker failed to boot.
+2020-09-15T10:04:30,278805354+00:00 - gunicorn/finish 3 0
+2020-09-15T10:04:30,280529570+00:00 - Exit code 3 is not normal. Killing image.
+
+ERROR - Error: Container has crashed. Did your init method fail?
+
+Traceback (most recent call last):
+  File "deploy.py", line 66, in <module>
+    service.wait_for_deployment(True)
+  File "/home/sonwang/anaconda3/lib/python3.7/site-packages/azureml/core/webservice/local.py", line 71, in decorated
+    return func(self, *args, **kwargs)
+  File "/home/sonwang/anaconda3/lib/python3.7/site-packages/azureml/core/webservice/local.py", line 601, in wait_for_deployment
+    cleanup_if_failed=False)
+  File "/home/sonwang/anaconda3/lib/python3.7/site-packages/azureml/_model_management/_util.py", line 748, in container_health_check
+    'Error: Container has crashed. Did your init method fail?')
+  File "/home/sonwang/anaconda3/lib/python3.7/site-packages/azureml/_model_management/_util.py", line 1259, in _raise_for_container_failure
+    raise WebserviceException(message, logger=module_logger)
+azureml.exceptions._azureml_exception.WebserviceException: WebserviceException:
+        Message: Error: Container has crashed. Did your init method fail?
+        InnerException None
+        ErrorResponse 
+{
+    "error": {
+        "message": "Error: Container has crashed. Did your init method fail?"
+    }
+
+(base) REDMOND.sonwang@bag-ts-27l:~/work/KG/tool/PyAzureDeploy/gpt3_services/agent_response$ docker run  -it convai2-servive /bin/bash
+root@b831cc4a76d5:/# ls
+azureml-environment-setup  azureml-envs  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  work  workspace
+root@b831cc4a76d5:/# conda env list   
+# conda environments:
+#
+                         /azureml-envs/azureml_da3e97fcb51801118b8e80207f3e01ad
+base                  *  /opt/conda
+
+root@b831cc4a76d5:/# exit()
+> exit
+bash: syntax error near unex

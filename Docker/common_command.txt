@@ -1,0 +1,92 @@
+Map current work dir to /root in the vm
+
+docker run -v $(pwd):/root -it node /bin/bash
+
+docker exec -it fafc95367889 /bin/bash
+
+docker run -u root -v $(pwd):/root  -it mcr.microsoft.com/azureml/pytorch-1.7-ubuntu18.04-py37-cpu-inference:latest /bin/bash
+cd /root/source_directory
+
+docker ps
+
+8cd910ccb930   mcr.microsoft.com/azureml/pytorch-1.7-ubuntu18.04-py37-cpu-inference:latest   "/bin/bash"              3 minutes ago
+
+apt-get update && apt-get install -y --no-install-recommends \
+    libsndfile1-dev \
+    libopenmpi-dev \
+    libmpich-dev \
+         wget && \
+    rm -rf /var/lib/apt/lists/*
+
+apt-get update --allow-unauthenticated  && apt-get install -y --no-install-recommends \
+    libsndfile1-dev \
+    libopenmpi-dev \
+    libmpich-dev \
+   
+         wget && \
+    rm -rf /var/lib/apt/lists/*
+  -v $(pwd):/workspace
+
+
+apt-get update  && apt-get install -y --no-install-recommends \
+   vim \
+   wget 
+
+
+https://github.com/NVIDIA/nvidia-docker/issues/1632
+
+RUN rm /etc/apt/sources.list.d/cuda.list
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list
+
+
+docker pull taconvsummary.azurecr.io/pytorch171:itp
+cd  ./agent_reponse/shared_cca_v5/
+docker run -u root -v $(pwd):/root  -it taconvsummary.azurecr.io/pytorch171:itp  /bin/bash
+cd /root/source_directory
+
+
+docker run -v $(pwd):/root  -it taconvsummary.azurecr.io/pytorch171:itp  /bin/bash
+
+apt-get update
+
+
+docker commit sleepy_wescoff pytorch171-tulgv1
+
+
+Testing:
+docker run -v $(pwd):/root  -it  pytorch171-tulgv1 /bin/bash
+
+#Tagging, create an alias
+docker tag pytorch171-tulgv1 taconvsummary.azurecr.io/pytorch171-tulgv1
+
+docker push taconvsummary.azurecr.io/pytorch171-tulgv1
+
+
+>>> exit()
+root@e42446f23173:~/source_directory# python test_score.py 
+Traceback (most recent call last):
+  File "test_score.py", line 9, in <module>
+    from MainzTrain.Models.Trainers.MainzTrainer import MainzTrainer
+  File "/root/source_directory/MainzTrain/Models/Trainers/MainzTrainer.py", line 24, in <module>
+    from .DistributedTrainer import DistributedTrainer
+  File "/root/source_directory/MainzTrain/Models/Trainers/DistributedTrainer.py", line 11, in <module>
+    from .BaseTrainer import BaseTrainer
+  File "/root/source_directory/MainzTrain/Models/Trainers/BaseTrainer.py", line 2, in <module>
+    from ...Utils.Arguments import save_opt_to_yaml
+  File "/root/source_directory/MainzTrain/Utils/Arguments.py", line 2, in <module>
+    import ruamel.yaml as yaml
+ModuleNotFoundError: No module named 'ruamel'
+
+root@e42446f23173:~/source_directory# pip install ruamel_yaml
+Requirement already satisfied: ruamel_yaml in /opt/miniconda/lib/python3.7/site-packages (0.15.87)
+
+/opt/miniconda/lib/python3.7/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+
+
+
+
+
+
+docker run -u root -v $(pwd):/root  -it mcr.microsoft.com/azureml/pytorch-1.7-ubuntu18.04-py37-cpu-inference  /bin/bash
